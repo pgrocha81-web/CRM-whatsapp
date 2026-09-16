@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "crons": [
+    {
+      "comment": "PENDENTE (Sprint 6): job de follow-up — varre public.followups com status=scheduled e scheduled_for <= now()",
+      "path": "/api/cron/followups",
+      "schedule": "*/15 * * * *"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+# Configuração do Supabase CLI para desenvolvimento local.
+# Rode `supabase init` só se este arquivo não for suficiente para sua versão da CLI.
+# Uso: supabase link --project-ref <seu-project-ref>  (depois de criar o projeto no painel Supabase)
+#      supabase db push                                (aplica as migrations em supabase/migrations)
+
+project_id = "koala-whatsapp-crm"
+
+[db]
+port = 54322
+major_version = 15
