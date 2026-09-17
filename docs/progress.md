@@ -1,15 +1,21 @@
 # Progress — Koala WhatsApp CRM
 
-Última atualização: 2026-09-16
+Última atualização: 2026-09-17
 
-## Feito (IMPLEMENTADO, não testado contra serviços reais — sem credenciais ainda)
+## Feito e TESTADO
 
-- Estrutura do projeto Next.js 16 + TypeScript + Tailwind (escrita manualmente; `npm install` bloqueado neste ambiente de desenvolvimento por política de rede, roda normalmente no seu computador/Vercel)
+- Repositório no GitHub (`pgrocha81-web/CRM-whatsapp`), branch `main`, código do Sprint 0/1 enviado
+- `npm install` e `npm run build` rodados de verdade no computador do Piero (Windows): **build compilou com sucesso, TypeScript sem erros, 6 rotas geradas** (`/`, `/_not-found`, `/api/webhooks/whatsapp`, `/inbox`, `/login`, middleware ativo)
+- Corrigidos nessa validação: chave `eslint` inválida no `next.config.ts` (removida — Next 16 não aceita mais essa chave ali) e tipagem de callbacks de cookies em `middleware.ts`/`src/lib/supabase/server.ts` (TS7031/TS7006)
+
+## Feito (IMPLEMENTADO, ainda não testado contra Supabase/Meta reais — sem esses projetos criados ainda)
+
+- Estrutura do projeto Next.js 16 + TypeScript + Tailwind
 - Schema completo do banco em `supabase/migrations/` (0001-0004): contacts, opportunities (1 contato : N oportunidades), pipeline configurável com as 13 etapas do briefing, conversations, messages, webhook_events, tasks, followups/sequences/steps, templates, automation_rules/logs, audit_logs — com índices e RLS
 - Seed inicial: 3 marcas, ~19 produtos, pipeline padrão com as 13 etapas
 - Webhook do WhatsApp (`/api/webhooks/whatsapp`): verificação GET, validação de assinatura HMAC-SHA256, registro idempotente em `webhook_events` (dedupe por `wa_message_id`)
-- Teste unitário (Vitest) da validação de assinatura — 5 casos (válida, secret errado, ausente, formato errado, payload alterado)
-- Middleware de autenticação (Supabase Auth) protegendo o dashboard
+- Teste unitário (Vitest) da validação de assinatura — 5 casos (válida, secret errado, ausente, formato errado, payload alterado) — ainda não rodado no ambiente do Piero, só a validação de build/typecheck
+- Middleware de autenticação (Supabase Auth) protegendo o dashboard — estrutura pronta, login ainda não funcional (falta projeto Supabase real)
 - Documentação: README, CRM_ARCHITECTURE, DATABASE_SCHEMA, SETUP_WHATSAPP, AUTOMATIONS, FOLLOWUP_RULES, SECURITY, DEPLOY, .env.example
 
 ## Em andamento
@@ -31,7 +37,7 @@
 
 ## Bloqueios reais (só o Piero resolve)
 
-1. Repositório GitHub vazio para receber este código (em andamento pelo Piero)
+1. ~~Repositório GitHub~~ — resolvido
 2. Projeto Supabase dedicado (URL + chaves)
 3. Meta App + WABA + número de telefone + tokens (ver `SETUP_WHATSAPP.md`)
 4. Conta Vercel + projeto importado do GitHub
@@ -39,4 +45,4 @@
 
 ## Próximo passo
 
-Assim que a URL do repositório GitHub chegar: configurar remote, dar push do estado atual, e seguir para o restante do Sprint 1 (auth) e início do Sprint 2 (cliente de envio da Cloud API), que não dependem de credenciais Meta para o código em si — só para testar de fato.
+Sprint 2: cliente de envio da WhatsApp Cloud API e processamento dos eventos já registrados em `webhook_events` — não depende de credenciais Meta para o código em si, só para testar de fato depois.
