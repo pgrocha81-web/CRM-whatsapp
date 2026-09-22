@@ -54,7 +54,13 @@ export interface WhatsAppInboundMessage {
   video?: { id: string; mime_type: string; caption?: string };
   location?: { latitude: number; longitude: number; name?: string; address?: string };
   button?: { text: string; payload: string };
-  interactive?: { type: string; [key: string]: unknown };
+  interactive?: {
+    type: "button_reply" | "list_reply" | string;
+    button_reply?: { id: string; title: string };
+    list_reply?: { id: string; title: string; description?: string };
+  };
+  /** Presente quando o cliente clicou num anúncio "clique para WhatsApp" */
+  referral?: { source_url?: string; source_type?: string; headline?: string };
 }
 
 export interface WhatsAppStatusUpdate {
