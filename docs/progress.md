@@ -30,17 +30,32 @@ Vai ser **um sistema só**. Este projeto vira o app da agência no endereço `ap
   - Docs: `docs/AVISOS.md`, `docs/TEMPLATES_META.md`.
 - **Rotinas**: `/api/cron/daily` (Vercel Cron, 8h) e `/api/cron/hourly` (pg_cron do Supabase).
 
+## Sprint 3 (23/09): telas + banco no ar
+
+- **Supabase `koala-whatsapp-crm` reativado.** Foram aplicadas as migrations `0008_bot_funil_viajantes_avisos` e `0009_equipe_login_orcamento` (a lista de e-mails autorizados, o gatilho que cria o perfil do usuário, o link do orçamento e os 3 templates). O painel de segurança (security advisors) só mostra avisos que são esperados.
+- Migrations locais renumeradas para seguir o histórico do banco: 0001 a 0004, 0007 (endurecimento de segurança, igual ao que já estava no banco), 0008 e 0009.
+- **Telas:**
+  - login real;
+  - Funil (Kanban de arrastar, com a janela de confirmação de venda);
+  - Oportunidade (etapa, dados, link do orçamento e botão de enviar, viajantes, tarefas, histórico);
+  - Conversas (lista e chat, com Assumir, Encerrar, responder e janela de 24h);
+  - Clientes;
+  - Tarefas;
+  - Vencimentos.
+  - Detalhes em `docs/TELAS.md`.
+- Verificado: `tsc`, 49 testes, `next build` (17 rotas) e capturas de tela das telas com dados fictícios, no computador e no celular.
+
 ## Pendente
 
-- **Telas** (Sprints 3 a 5): inbox, Kanban com arrastar (que vai chamar a rota de etapa), cadastro de viajantes e painel "Vencimentos do mês".
 - **Migração do app atual**: importar os 70 cards, os clientes e as datas de passaporte e visto. Cards com etapa de venda devem entrar com `closed_at` preenchido para ganhar os avisos.
-- **Login real** e gestão de usuários (Piero e Aline).
+- Criar os usuários no Supabase Auth (Piero; Aline depois que o e-mail dela estiver na lista de autorizados).
+- Proposta da Koala (capa, roteiro, "Quero fechar", rastrear abertura) em cima do link do Infotravel/Hoteldo.
 - Sprints 6 a 10, conforme o plano original (follow-up, IA, automações configuráveis, dashboard, testes ponta a ponta).
 
 ## Bloqueios reais (só o Piero resolve)
 
 1. ~~Repositório GitHub~~: resolvido.
-2. Supabase `koala-whatsapp-crm` (`ksanckobmvnpfxulipzv`): está **pausado**. É preciso reativar e depois aplicar as migrations e o seed.
+2. ~~Supabase~~: reativado e com a estrutura aplicada em 23/09. Falta copiar a chave **secret** para a Vercel.
 3. Meta: App + WABA + número + tokens (ver `SETUP_WHATSAPP.md`), e **os 3 templates** de `TEMPLATES_META.md` enviados para aprovação.
 4. Vercel: importar o projeto e configurar as variáveis do `.env.example`.
 5. Google Calendar (conta de serviço) e Trello (key, token e ID da lista): ver `INTEGRACOES.md`.

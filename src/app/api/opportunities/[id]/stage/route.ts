@@ -1,7 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
-import { moveOpportunityStage } from "@/lib/crm/db";
-import { handleOpportunityWon } from "@/lib/crm/won";
+import { changeStageAsStaff } from "@/lib/crm/stage-change";
 import { createSupabaseServerClient, createSupabaseServiceClient } from "@/lib/supabase/server";
 
 const Body = z.object({
@@ -31,19 +30,13 @@ export async function POST(request: NextRequest, context: { params: Promise<{ id
   const parsed = Body.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
 
-  const sb = createSupabaseServiceClient();
-  if (parsed.data.closed_value_cents !== undefined) {
-    await sb.from("opportunities").update({ closed_value_cents: parsed.data.closed_value_cents }).eq("id", id);
-  }
-  const { stage, changed } = await moveOpportunityStage(sb, {
+  const { stage, integrations } = await changeStageAsStaff(createSupabaseServiceClient(), {
     opportunityId: id,
-    toStageId: parsed.data.stage_id,
-    reason: parsed.data.reason ?? "movido manualmente",
+    stageId: parsed.data.stage_id,
     actorId: user.id,
+    reason: parsed.data.reason,
+    closedValueCents: parsed.data.closed_value_cents,
   });
-
-  let integrations: { errors: string[] } | null = null;
-  if (stage.is_won && changed) integrations = await handleOpportunityWon(sb, id);
 
   return NextResponse.json({ ok: true, stage: stage.name, integrations });
 }

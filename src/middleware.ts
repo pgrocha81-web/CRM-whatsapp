@@ -45,7 +45,7 @@ export async function middleware(request: NextRequest) {
 
   if (user && isLoginPage) {
     const dashboardUrl = request.nextUrl.clone();
-    dashboardUrl.pathname = "/inbox";
+    dashboardUrl.pathname = "/funil";
     return NextResponse.redirect(dashboardUrl);
   }
 
@@ -60,6 +60,6 @@ export const config = {
      * - /api/cron/* (autenticação própria via CRON_SECRET)
      * - arquivos estáticos e internals do Next.js
      */
-    "/((?!api/webhooks|api/cron|_next/static|_next/image|favicon.ico).*)",
+    "/((?!api/webhooks|api/cron|preview|_next/static|_next/image|favicon.ico).*)",
   ],
 };
