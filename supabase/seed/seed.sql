@@ -59,3 +59,13 @@ join (values
 ) as s(name, position, is_won, is_lost, color) on true
 where p.is_default = true
 on conflict (pipeline_id, position) do nothing;
+
+-- ------------------------------------------------------------
+-- Templates de aviso (texto completo em docs/TEMPLATES_META.md).
+-- approval_status começa 'pending' — atualizar para 'approved' quando a Meta aprovar.
+-- ------------------------------------------------------------
+insert into public.templates (meta_template_name, category, language, body_preview) values
+  ('koala_viagem_1_semana', 'utility', 'pt_BR', 'Oi, {{1}}! 🐨✈️ Falta só 1 semana pra sua viagem para {{2}}! Embarque em {{3}}. ...'),
+  ('koala_passaporte_vencendo', 'utility', 'pt_BR', 'Oi, {{1}}! 🐨 O passaporte de {{2}} vence em {{3}}. ...'),
+  ('koala_visto_vencendo', 'marketing', 'pt_BR', 'Oi, {{1}}! 🐨 O visto americano de {{2}} vence em {{3}}. ... [Quero renovar]')
+on conflict (meta_template_name) do nothing;

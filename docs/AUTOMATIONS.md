@@ -1,6 +1,6 @@
 # Automações e handoff humano
 
-Status: **PENDENTE DE IMPLEMENTAÇÃO** (Sprint 8) — este documento registra as regras já decididas no briefing, para orientar a implementação futura.
+Status: bot de qualificação, handoff por "atendente", fluxo de documentos e avisos **IMPLEMENTADOS** (Sprint 2), ver `BOT_FUNIL.md` e `AVISOS.md`. Classificação por IA e sugestão de resposta continuam para o Sprint 7/8.
 
 ## Princípio
 
